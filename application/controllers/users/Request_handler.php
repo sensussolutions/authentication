@@ -22,7 +22,7 @@ class Request_handler extends CI_Controller
                 $user_info = array('email'=>$email,'password'=>$password,'application_id'=>$application_id,'company_id'=>$company_id);
                 $user_info = json_encode($user_info);
                 $url = $this->url.$this->variables['login'];
-                echo auth_request($url,$user_info);
+                echo  auth_request($url,$user_info);
         }
  }
  public function register(){
