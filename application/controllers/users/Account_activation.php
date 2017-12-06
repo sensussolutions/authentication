@@ -8,14 +8,17 @@ class Account_activation extends CI_Controller
         //also called model and other thing here
         $this->load->model('Signup');
     }
-    public function index(){
-        $activation_key = $_GET['verify'];
-        $count=$this->Signup->active_user($activation_key);
+    public function activate_account(){
+        $activation_key = json_decode(file_get_contents('php://input'), true);
+        $activation_key = $activation_key['activation_key'];
+       $count=$this->Signup->active_user($activation_key);
         if ($count>0){
-            redirect("http://localhost/OnlineReporting");
+            $message = array('status'=>200,'message'=>'Activated');
+           echo json_encode($message);
         }
         else{
-            redirect('http://localhost/OnlineReporting/404_override');
+            $message = array('status'=>400,'message'=>'Bad request');
+            echo json_encode($message);
         }
     }
 }

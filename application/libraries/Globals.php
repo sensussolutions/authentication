@@ -2,20 +2,11 @@
 
 class Globals
 {
-    /*public $data = array();
-    public function __construct($config = array())
-    {
-        foreach ($config as $key=>$value){
-             $data[$key] = $value;
-        }
-        // Make instance of CodeIgniter to use its resources
-        $CI = & get_instance();
-
-// Load data into CodeIgniter
-        $CI->load->vars($data);
-    }*/
     public function user_variables(){
-        return $data = array('api'=>'http://localhost/authentication/users/request_handler/');
+        return $url = array('api'=>'http://localhost/authentication/','login'=>'sign_in/login',
+            'register'=>'users/sign_up/register_new_user','account activation'=>'users/account_activation/activate_account',
+            'forgot password'=>'users/forgot_password/email_verify','password reset'=>'users/reset_password/key_exist',
+            'password update'=>'users/reset_password/password_update');
     }
 
 }
