@@ -8,45 +8,90 @@ class Request_handler extends CI_Controller
         parent::__construct();
         $this->load->helper('apimanager');
         $this->variables = $this->globals->user_variables();
+        $this->variables = $this->variables[1];
         $this->url = $this->variables['api'];
+
     }
- public function login(){
-        if (!isset($_REQUEST['email']) || !isset($_REQUEST['password'])|| !isset($_REQUEST['application_id']) || !isset($_REQUEST['company_id'])){
-                echo  json_encode(array('status'=>400,'message'=>'Bad request.'));
-        }
+    public function login(){
+      if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET' ) {
+
+          if (isset($_GET['email']) && isset($_GET['password']) && isset($_GET['application_id']) && isset($_GET['company_id'])) {
+              $email = $_GET['email'];
+              $password = $_GET['password'];
+              $application_id = $_GET['application_id'];
+              $company_id = $_GET['company_id'];
+              $user_info = array('email' => $email, 'password' => $password, 'application_id' => $application_id, 'company_id' => $company_id);
+              $user_info = json_encode($user_info);
+              $url = $this->url . $this->variables['login'];
+              echo auth_request($url, $user_info);
+              exit();
+          }
+          else if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['application_id']) && isset($_POST['company_id'])){
+              $email = $_POST['email'];
+              $password = $_POST['password'];
+              $application_id = $_POST['application_id'];
+              $company_id = $_POST['company_id'];
+              $user_info = array('email' => $email, 'password' => $password, 'application_id' => $application_id, 'company_id' => $company_id);
+              $user_info = json_encode($user_info);
+              $url = $this->url . $this->variables['login'];
+              echo auth_request($url, $user_info);
+              exit();
+          }
+          else{
+              echo  json_encode(array('status'=>400,'message'=>'Bad request.'));
+              exit();
+          }
+      }
         else {
-                $email = $_REQUEST['email'];
-                $password = $_REQUEST['password'];
-                $application_id = $_REQUEST['application_id'];
-                $company_id = $_REQUEST['company_id'];
-                $user_info = array('email'=>$email,'password'=>$password,'application_id'=>$application_id,'company_id'=>$company_id);
-                $user_info = json_encode($user_info);
-                $url = $this->url.$this->variables['login'];
-                echo  auth_request($url,$user_info);
+            echo  json_encode(array('status'=>400,'message'=>'Bad request.'));
+            exit();
+
         }
  }
- public function register(){
-     if (!isset($_REQUEST['user_name']) || !isset($_REQUEST['email']) || !isset($_REQUEST['password'])|| !isset($_REQUEST['application_id']) || !isset($_REQUEST['company_id'])){
-         echo  json_encode(array('status'=>400,'message'=>'Bad request.'));
+    public function register(){
+     if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET' ) {
+         if (isset($_GET['user_name'])) {
+             $user_name = $_GET['user_name'];
+             $email = $_GET['email'];
+             $password = $_GET['password'];
+             $application_id = $_GET['application_id'];
+             $company_id = $_GET['company_id'];
+             $user_info = array('user_name' => $user_name, 'email' => $email, 'password' => $password, 'application_id' => $application_id, 'company_id' => $company_id);
+             $user_info = json_encode($user_info);
+             $url = $this->url . $this->variables['register'];
+             echo auth_request($url, $user_info);
+             exit();
+         } else {
+             echo json_encode(array('status' => 400, 'message' => 'Bad request.'));
+             exit();
+         }
      }
+         else if (isset($_POST['user_name']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['application_id']) && isset($_POST['company_id'])) {
+               $user_name = $_POST['user_name'];
+               $email = $_POST['email'];
+               $password = $_POST['password'];
+               $application_id = $_POST['application_id'];
+               $company_id = $_POST['company_id'];
+               $user_info = array('user_name'=>$user_name,'email'=>$email,'password'=>$password,'application_id'=>$application_id,'company_id'=>$company_id);
+               $user_info = json_encode($user_info);
+               $url = $this->url.$this->variables['register'];
+               echo auth_request($url,$user_info);
+               die();
+           }
+
+    /* }
      else {
-         $user_name = $_REQUEST['user_name'];
-         $email = $_REQUEST['email'];
-         $password = $_REQUEST['password'];
-         $application_id = $_REQUEST['application_id'];
-         $company_id = $_REQUEST['company_id'];
-         $user_info = array('user_name'=>$user_name,'email'=>$email,'password'=>$password,'application_id'=>$application_id,'company_id'=>$company_id);
-         $user_info = json_encode($user_info);
-         $url = $this->url.$this->variables['register'];
-         echo auth_request($url,$user_info);
-     }
+         echo"in upar else";
+         echo json_encode(array('status' => 400, 'message' => 'Bad request.'));
+         die();
+     }*/
  }
     public function account_activation(){
-        if (!isset($_REQUEST['activation_key'])){
+        if (!isset($_GET['activation_key'])){
             echo  json_encode(array('status'=>400,'message'=>'Bad request.'));
         }
         else {
-            $activation_key = $_REQUEST['activation_key'];
+            $activation_key = $_GET['activation_key'];
             $user_info = array('activation_key'=>$activation_key);
             $user_info = json_encode($user_info);
             $url = $this->url.$this->variables['account activation'];
@@ -54,36 +99,78 @@ class Request_handler extends CI_Controller
         }
     }
     public function forgot_password(){
-        if (!isset($_REQUEST['reminder_email'])){
-            echo  json_encode(array('status'=>400,'message'=>'Bad request.'));
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET' ) {
+            if (isset($_GET['reminder_email'])) {
+               $email = $_GET['reminder_email'];
+                $user_info = array('reminder_email' => $email);
+                $user_info = json_encode($user_info);
+                $url = $url = $this->url . $this->variables['forgot password'];;
+                auth_request($url, $user_info);
+                exit();
+
+            } else if (isset($_POST['reminder_email'])) {
+                $email = $_POST['reminder_email'];
+                $user_info = array('reminder_email' => $email);
+                $user_info = json_encode($user_info);
+                $url = $url = $this->url . $this->variables['forgot password'];;
+                auth_request($url, $user_info);
+                exit();
+            }
+            else{
+                echo  json_encode(array('status'=>400,'message'=>'Bad request.'));
+                exit();
+            }
         }
-        $email = $_REQUEST['reminder_email'];
-        $user_info =array('reminder_email'=>$email);
-        $user_info = json_encode($user_info);
-        $url =  $url = $this->url.$this->variables['forgot password'];;
-        auth_request($url,$user_info);
+        else{
+            echo  json_encode(array('status'=>400,'message'=>'Bad request.'));
+            exit();
+        }
+
     }
+    
     public function password_reset(){
-        if (!isset($_REQUEST['activation_key'])){
+        if (!isset($_GET['activation_key'])){
             echo  json_encode(array('status'=>400,'message'=>'Bad request.'));
         }
-        $activation_key = $_REQUEST['activation_key'];
-        $user_info =array('activation_key'=>$activation_key);
-        $user_info = json_encode($user_info);
-        $url =  $url = $this->url.$this->variables['password reset'];
-        auth_request($url,$user_info);
+        else{
+            $activation_key = $_GET['activation_key'];
+            $user_info =array('activation_key'=>$activation_key);
+            $user_info = json_encode($user_info);
+            $url =  $url = $this->url.$this->variables['password reset'];
+            auth_request($url,$user_info);
+        }
     }
+    
     public function password_update(){
-        if (!isset($_REQUEST['activation_key'])|| !isset($_REQUEST['password'])){
-            echo  json_encode(array('status'=>400,'message'=>'Bad request.'));
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET' ) {
+        if (isset($_GET['activation_key'])&& isset($_GET['password'])){
+            $activation_key = $_GET['activation_key'];
+            $password = $_GET['password'];
+            $user_info =array('activation_key'=>$activation_key,'password'=>$password);
+            $user_info = json_encode($user_info);
+            $url =  $url = $this->url.$this->variables['password update'];
+            auth_request($url,$user_info);
+            exit();
         }
-        $activation_key = $_REQUEST['activation_key'];
-        $password = $_REQUEST['password'];
-        $user_info =array('activation_key'=>$activation_key,'password'=>$password);
-        $user_info = json_encode($user_info);
-        $url =  $url = $this->url.$this->variables['password update'];
-        auth_request($url,$user_info);
+        else if(isset($_POST['activation_key'])&& isset($_POST['password'])){
+            $activation_key = $_POST['activation_key'];
+            $password = $_POST['password'];
+            $user_info =array('activation_key'=>$activation_key,'password'=>$password);
+            $user_info = json_encode($user_info);
+            $url =  $url = $this->url.$this->variables['password update'];
+            auth_request($url,$user_info);
+            exit();
+        }
+        else{
+            echo  json_encode(array('status'=>400,'message'=>'Bad request.'));
+            exit();
+        }
+        }
+        else{
+            echo  json_encode(array('status'=>400,'message'=>'Bad request.'));
+            exit();
+        }
+
+
     }
-
-
 }

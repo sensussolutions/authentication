@@ -1,30 +1,27 @@
 <?php
 
-class Forgot_password extends CI_Controller
+require_once APPPATH . 'controllers/users/My_helper.php';
+
+class Forgot_password extends My_helper
 {
-    public function __construct()
-    {
-        parent::__construct();
-        //also called model and other thing here
-        $this->load->model('Signup');
-        $this->load->helper('sendemail');
-        $this->load->helper('encryptpass');
-    }
-        public function index(){
-            $page_info = array('page_name'=>'users/forgot_password','page_title'=>'Forgot Password');
-            $this->load->view('users/main',$page_info);
+
+        public function load_view(){
+           $page_info = array('page_name' => $this->page_name['forgot_password'], 'page_title' => $this->page_title['forgot_password']);
+        $this->load->view('users/main', $page_info);
         }
 
     public function email_verify(){
         $user_info = json_decode(file_get_contents('php://input'), true);
         $email = $user_info['reminder_email'];
         $activation_key =  generate_activation_key();
-            $is_exist = $this->Signup->email_exist($email);
+        $is_exist = $this->Signup->email_exist($email);
             if ($is_exist>0){
-                $data = array('template'=>'forgot password','activation_key'=>$activation_key,'user_email'=>$email);
-                $is_send_ = send_email('users/password_reset_body',$email,$data);
+                $this->variables = $this->variables[1];
+                $data = array('template'=>'forgot password','activation_key'=>$activation_key,'user_email'=>$email,
+                    'forgot_password_link'=>$this->variables['api'].$this->variables['forgot_password_link']);
+                $is_send_ = send_email('users/password-reset-temp',$email,$data);
                 if ($is_send_ == true){
-                    $update_key = array('activation_key'=>$activation_key);
+                    $update_key = array('ActivationKey'=>$activation_key);
                     $is_update = $this->Signup->update_activation_key($email,$update_key);
                     if ($is_update>0){
                         $message = array('status'=>200,'message'=>'Email is exist');
@@ -39,7 +36,5 @@ class Forgot_password extends CI_Controller
             }
         echo json_encode($message);
     }
-
-
 
 }

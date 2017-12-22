@@ -16,10 +16,10 @@
 <script src="assets/js/app.js"></script>
 <?php if ($page_title == 'Sign In'){?>
 <script src="assets/js/signin.js"></script>
-<?php }else if($page_title == 'Register'){?>
+<?php }else if($page_title == 'New User'){?>
     <script src="assets/js/signup.js"></script>
 <?php } else if ($page_title == 'Forgot Password'){?>
     <script src="assets/js/forgot_password.js"></script>
-<?php } else if($page_title == 'Reset Password'){?>
+<?php } else if($page_title == 'Password Reset'){?>
     <script src="assets/js/reset_password.js"></script>
 <?php }?>

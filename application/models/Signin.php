@@ -6,8 +6,8 @@ class Signin extends CI_Model
         $result = array('exist'=>false);
         $this->db->select('*');
         $this->db->from('users');
-        $this->db->where('user_email', $emailId);
-        $this->db->where('user_password', $password);
+        $this->db->where('Email', $emailId);
+        $this->db->where('Password', $password);
         $query_result = $this->db->get();
         $count = $query_result->num_rows();
        if ($count>0){
@@ -20,8 +20,8 @@ class Signin extends CI_Model
     public function getUserInformation($emailId, $password){
         $this->db->select('*');
         $this->db->from('users');
-        $this->db->where('user_email', $emailId);
-        $this->db->where('user_password', $password);
+        $this->db->where('Email', $emailId);
+        $this->db->where('Password', $password);
         $query_result = $this->db->get();
        return $result = $query_result->result();
     }

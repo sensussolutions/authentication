@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'au-cdbr-azure-east-a.cloudapp.net',
-	'username' => 'b0dcce229e1cd8',
-	'password' => 'dfc27fd6',
-	'database' => 'db_authentication',
+	'hostname' => 'localhost',
+	'username' => 'zeakqrmt_auth',
+	'password' => 'sensusauth201718',
+	'database' => 'zeakqrmt_auth',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

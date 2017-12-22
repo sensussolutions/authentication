@@ -1,29 +1,31 @@
 <?php
-
-class Sign_in extends CI_Controller
+require_once APPPATH . 'controllers/users/My_helper.php';
+class Sign_in extends My_helper
 {
-    public function index()
+     public function __construct()
     {
-        $page_info = array('page_name' => 'users/sign_in', 'page_title' => 'Sign In');
-        $this->load->view('users/main', $page_info);
-        /*if ($this->session->has_userdata('is_login')) {
+        parent::__construct();
+        //also called model and other thing here
+    }
+    public function load_view()
+    {
+        if ($this->session->has_userdata('is_login')) {
             header('Location: dashboard');
 
         } else {
-            $page_info = array('page_name' => 'users/sign_in', 'page_title' => 'Sign In');
-            $this->load->view('users/main', $page_info);
-        }*/
+            $page_info = array('page_name' => $this->page_name['sign_in'], 'page_title' => $this->page_title['sign_in']);
+        $this->load->view('users/main', $page_info);
+        }
     }
     public function login()
     {
         $user_info = json_decode(file_get_contents('php://input'), true);
         $this->load->model('Signin');
-        $this->load->helper('encryptpass');
         $userInformation = $this->Signin->userAuth($user_info['email'], convert_password($user_info['password']));
         if ($userInformation['exist']){
             foreach ($userInformation['userInformation'] as $row){
-                if ($row->is_active == '1'){
-                    $userProfile = array('status'=>200,'id'=>$row->id);
+                if ($row->IsActive == '1'){
+                    $userProfile = array('status'=>200,'id'=>$row->ID);
                     echo  json_encode($userProfile);
                 }
                 else{
@@ -37,5 +39,12 @@ class Sign_in extends CI_Controller
             echo  json_encode($userProfile);
         }
 
+    }
+    public function remove_session(){
+        echo "in remove session";
+        $this->session->unset_userdata('is_login');
+        $this->session->sess_destroy();
+        $login  = base_url();
+        redirect($login);
     }
 }

@@ -30,24 +30,46 @@ $(document).ready(function () {
         }
         else {
             var form_data = $('#registration_form').serialize();
+            $('.submit-button').attr('disabled',true);
+            $('#register-username').attr('disabled',true);
+            $('#register-email').attr('disabled',true);
+            $('#register-password').attr('disabled',true);
+            $('#register-password2').attr('disabled',true);
             $.ajax({
-                url: 'users/sign_up/register_new_user',
+                url: 'users/request_sender/register',
                 type: 'post',
                 dataType: 'json',
                 data: form_data,
+                beforeSend:function () {
+
+                    /* $('.content').css("backgroundColor","#0b0b0b");
+                     $('.loader').css("display","block");
+                     $('.main-content').css("opacity","0.1");*/
+                },
+                complete:function () {
+                    // $('.content').css("backgroundColor","#0b0b0b");
+                    // $('.loader').css("display","none");
+                    // $('.main-content').css("opacity","0.9");
+                },
                 success: function (response) {
-                    //  var response=JSON.parse(response);
-                    console.log(response);
-                    if (response.message == true) {
+                    /*   $('.content').css("backgroundColor","#f5f5f5");
+                     $('.loader').css("display","none");
+                     $('.main-content').css("opacity","0.9");*/
+                    //  console.log(response);
+                    $('.submit-button').removeAttr('disabled');
+                    $('#register-username').removeAttr('disabled');
+                    $('#register-email').removeAttr('disabled');
+                    $('#register-password').removeAttr('disabled');
+                    $('#register-password2').removeAttr('disabled');
+                    if (response.status == 201) {
                         $('.strong-message').text('Success!');
                         $('.message').text('Please verify your email id.');
                         $('.toast-message').removeClass('alert-danger');
                         $('.toast-message').removeClass('alert-info');
                         $('.toast-message').addClass('alert-success');
                         $('.toast-message').removeClass('hidden');
-
                     }
-                    else if (response.message == false) {
+                    else if (response.status == 401) {
                         $('.strong-message').text('Warning!');
                         $('.message').text('This email id already exist. Please chose different one.');
                         $('.toast-message').removeClass('alert-success');
@@ -55,9 +77,9 @@ $(document).ready(function () {
                         $('.toast-message').addClass('alert-danger');
                         $('.toast-message').removeClass('hidden');
                     }
-                    else if (response.message == 'email not send') {
+                    else if (response.status == 501) {
                         $('.strong-message').text('Fail!');
-                        $('.message').text('Email not send. Please try again');
+                        $('.message').text('Network error. Please try again');
                         $('.toast-message').removeClass('alert-success');
                         $('.toast-message').removeClass('alert-danger');
                         $('.toast-message').addClass('alert-info');

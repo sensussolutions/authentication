@@ -1,30 +1,33 @@
 <?php
 
-class Sign_up extends CI_Controller
+require_once APPPATH . 'controllers/users/My_helper.php';
+
+class Sign_up extends My_helper
 {
     public function __construct()
     {
-      /*  parent::__construct();
+        parent::__construct();
         $this->load->model('Signup');
         $this->load->helper('sendemail');
-        $this->load->helper('encryptpass');*/
+        $this->load->helper('encryptpass');
     }
-    public function index(){
-        $page_info = array('page_name'=>'users/sign_up','page_title'=>'Register');
-        $this->load->view('users/main',$page_info);
+    public function load_view(){
+       $page_info = array('page_name' => $this->page_name['sign_up'], 'page_title' => $this->page_title['sign_up']);
+        $this->load->view('users/main', $page_info);
     }
-    public function register_new_user(){
+    public function register(){
         $user_info = json_decode(file_get_contents('php://input'), true);
         $activation_key = generate_activation_key();
-        $userInformation = array('user_name'=>$user_info['user_name'],
-            'user_email'=>$user_info['email'],'activation_key'=>$activation_key,
-            'user_password'=>convert_password($user_info['password']),'is_active'=>'0');
+        $userInformation = array('Name'=>$user_info['user_name'],
+            'Email'=>$user_info['email'],'ActivationKey'=>$activation_key,
+            'Password'=>convert_password($user_info['password']),'IsActive'=>'0');
 
         $count= $this->Signup->email_exist($user_info['email']);
         if ($count == 0){
-
-            $data = array('template'=>'signup','activation_key'=>$activation_key,'user_email'=>$user_info['email']);
-            $is_send_ = send_email('users/email_body',$user_info['email'],$data);
+            $this->variables = $this->variables[1];
+            $data = array('template'=>'signup','activation_key'=>$activation_key,'user_email'=>$user_info['email'],
+                'application_link'=>$this->variables['api'].$this->variables['account_activation_link']);
+            $is_send_ = send_email('users/email-temp',$user_info['email'],$data);
             if ($is_send_ == true){
 
                 $this->Signup->insert_new_user($userInformation);
