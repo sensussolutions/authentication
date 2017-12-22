@@ -32,7 +32,7 @@
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <div class="form-material form-material-primary floating">
-                                    <input class="form-control" type="email" id="login-username" name="login-username">
+                                    <input class="form-control login-username" type="email" id="login-username" name="login-username">
                                     <label for="login-username">Username</label>
                                 </div>
                             </div>
@@ -40,7 +40,7 @@
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <div class="form-material form-material-primary floating">
-                                    <input class="form-control" type="password" id="login-password" name="login-password">
+                                    <input class="form-control login-password" type="password" id="login-password" name="login-password">
                                     <label for="login-password">Password</label>
                                 </div>
                             </div>
@@ -54,7 +54,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-xs-12 col-sm-6 col-md-4">
-                                <button class="btn btn-block btn-primary" type="submit"><i class="si si-login pull-right"></i> Log in</button>
+                                <button class="btn btn-block btn-primary submit-button" type="submit"><i class="si si-login pull-right"></i> Log in</button>
                             </div>
 
                         </div>

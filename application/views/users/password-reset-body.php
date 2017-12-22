@@ -33,7 +33,7 @@
         <td>
             <div style="margin-top: 20px;">
               <span style="color: #707070; font-size:15px; " >Here is the link:
-                  <span style="color:#3672EC; "> <a href="http://localhost/OnlineReporting/users/request_handler/password_reset?verify=<?php echo $activation_key;?>">Click here</a></span>
+                  <span style="color:#3672EC; "> <a href="<?php echo $forgot_password_link.$activation_key;?>">Click here</a></span>
               </span>
             </div>
         </td>

@@ -12,7 +12,7 @@
                 <div class="block-header bg-primary">
                     <ul class="block-options">
                         <li>
-                            <a href="http://localhost/ui" data-toggle="tooltip" data-placement="left" title="Log In"><i class="si si-login"></i></a>
+                            <a href="<?php echo base_url(); ?>" data-toggle="tooltip" data-placement="left" title="Log In"><i class="si si-login"></i></a>
                         </li>
                     </ul>
                     <h3 class="block-title">Password Reminder</h3>
@@ -30,7 +30,7 @@
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <div class="form-material form-material-primary floating">
-                                    <input class="form-control" type="email" id="reminder-email" name="reminder-email">
+                                    <input class="form-control reminder-email" type="email" id="reminder-email" name="reminder-email">
                                     <label for="reminder-email">Email</label>
                                 </div>
                             </div>

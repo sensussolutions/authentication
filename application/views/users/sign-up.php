@@ -15,7 +15,7 @@
                             <a href="#" data-toggle="modal" data-target="#modal-terms">View Terms</a>
                         </li>
                         <li>
-                            <a href="http://localhost/ui/" data-toggle="tooltip" data-placement="left" title="Log In"><i class="si si-login"></i></a>
+                            <a href="<?php echo base_url(); ?>" data-toggle="tooltip" data-placement="left" title="Log In"><i class="si si-login"></i></a>
                         </li>
                     </ul>
                     <h3 class="block-title">Register</h3>
@@ -33,7 +33,7 @@
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <div class="form-material form-material-primary">
-                                    <input class="form-control" type="text" id="register-username" name="register-username" placeholder="Please enter a username">
+                                    <input class="form-control register-username" type="text" id="register-username" name="register-username" placeholder="Please enter a username">
                                     <label for="register-username">Username</label>
                                 </div>
                             </div>
@@ -41,7 +41,7 @@
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <div class="form-material form-material-primary">
-                                    <input class="form-control" type="email" id="register-email" name="register-email" placeholder="Please provide your email">
+                                    <input class="form-control register-email" type="email" id="register-email" name="register-email" placeholder="Please provide your email">
                                     <label for="register-email">Email</label>
                                 </div>
                             </div>
@@ -49,7 +49,7 @@
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <div class="form-material form-material-primary">
-                                    <input class="form-control" type="password" id="register-password" name="register-password" placeholder="Choose a strong password..">
+                                    <input class="form-control register-password" type="password" id="register-password" name="register-password" placeholder="Choose a strong password..">
                                     <label for="register-password">Password</label>
                                 </div>
                             </div>
@@ -57,7 +57,7 @@
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <div class="form-material form-material-primary">
-                                    <input class="form-control" type="password" id="register-password2" name="register-password2" placeholder="..and confirm it">
+                                    <input class="form-control register-password2" type="password" id="register-password2" name="register-password2" placeholder="..and confirm it">
                                     <label for="register-password2">Confirm Password</label>
                                 </div>
                             </div>
@@ -71,7 +71,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-xs-12 col-sm-6 col-md-5">
-                                <button class="btn btn-block btn-primary" type="submit"><i class="fa fa-plus pull-right"></i> Sign Up</button>
+                                <button class="btn btn-block btn-primary submit-button" type="submit"><i class="fa fa-plus pull-right"></i> Sign Up</button>
                             </div>
                         </div>
                     </form>
