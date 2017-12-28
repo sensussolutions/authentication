@@ -21,11 +21,12 @@ class Sign_in extends My_helper
     {
         $user_info = json_decode(file_get_contents('php://input'), true);
         $this->load->model('Signin');
-        $userInformation = $this->Signin->userAuth($user_info['email'], convert_password($user_info['password']));
+        $userInformation = $this->Signin->userAuth($user_info[$this->api_variable[0]], convert_password($user_info[$this->api_variable[1]]),
+            $user_info[$this->api_variable[2]]);
         if ($userInformation['exist']){
             foreach ($userInformation['userInformation'] as $row){
-                if ($row->IsActive == '1'){
-                    $userProfile = array('status'=>200,'id'=>$row->ID);
+                if ($row->IsActive == '1' && $row->Status == 'active'){
+                    $userProfile = array('status'=>200,'id'=>$row->ID,'AppID'=>$row->AppID,'AppName'=>$row->AppName);
                     echo  json_encode($userProfile);
                 }
                 else{
